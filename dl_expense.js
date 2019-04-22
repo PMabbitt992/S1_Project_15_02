@@ -30,18 +30,20 @@
       Formats the value, "val", as U.S. currency.
       
 */
-
-window.onload = function () {
+window.addEventListener("load", function () {
       var changingCells = document.querySelectorAll("table#travelExp input.sum");
       for (var i = 0; i < changingCells.length; i++) {
-            document.onchange = calcExp();
+            changingCells[i].onchange = calcExp;
       }
-      document.getElementById("submitButton").addEventListener("click", validateSummary);
-}
+
+      document.getElementById("submitButton").onclick = function () {
+            validateSummary();
+      }
+});
 
 
 function validateSummary() {
-      var summary = document.querySelector("textarea#summary");
+      var summary = document.getElementById("summary");
       if (summary.validity.valueMissing) {
             summary.setCustomValidity("You must include a summary of the trip in your report");
       } else {
@@ -50,13 +52,16 @@ function validateSummary() {
 }
 
 function calcClass(sumClass) {
-      var sumFields = document.querySelectorAll(sumClass);
+      var sumFields = document.getElementsByClassName(sumClass);
+      console.log(document.getElementsByClassName("lodge"));
       var sumTotal = 0;
       for (var i = 0; i < sumFields.length; i++) {
-            var itemValue = parseFloat(sumFields[i]);
-            if (isNaN(itemValue) === false) {
+
+            var itemValue = parseFloat(sumFields[i].value);
+            if (!isNaN(itemValue)) {
                   sumTotal += itemValue;
             }
+
             return sumTotal;
       }
 }
@@ -64,14 +69,17 @@ function calcClass(sumClass) {
 
 function calcExp() {
       var expTable = document.querySelectorAll("table#travelExp tbody tr");
+      console.log(expTable);
       for (var i = 0; i < expTable.length; i++) {
-            document.getElementById("subtotal" + [i]).value = formatNumber(calcClass(".date" + [i]), 2);
+            document.getElementById("subtotal" + i).value = formatNumber(calcClass("date" + i), 2);
       }
-      document.getElementById("transTotal").value = formatNumber(calcClass(".trans"), 2);
-      document.getElementById("lodgeTotal").value = formatNumber(calcClass(".lodge"), 2);
-      document.getElementById("mealTotal").value = formatNumber(calcClass(".meal"), 2);
-      document.getElementById("otherTotal").value = formatNumber(calcClass(".other"), 2);
-      document.getElementById("expTotal").value = formatUSCurrency(calcClass(".sum"));
+      document.getElementById("transTotal").value = formatNumber(calcClass("trans"), 2);
+      document.getElementById("lodgeTotal").value = formatNumber(calcClass("lodge"), 2);
+      document.getElementById("mealTotal").value = formatNumber(calcClass("meal"), 2);
+      document.getElementById("otherTotal").value = formatNumber(calcClass("other"), 2);
+      document.getElementById("expTotal").value = formatUSCurrency(calcClass("sum"));
+
+
 
 }
 
