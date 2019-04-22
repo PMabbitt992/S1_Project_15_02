@@ -38,7 +38,7 @@ window.addEventListener("load", function () {
 
       document.getElementById("submitButton").onclick = function () {
             validateSummary();
-      }
+      };
 });
 
 
@@ -62,8 +62,9 @@ function calcClass(sumClass) {
                   sumTotal += itemValue;
             }
 
-            return sumTotal;
       }
+      return sumTotal;
+
 }
 
 
@@ -78,9 +79,6 @@ function calcExp() {
       document.getElementById("mealTotal").value = formatNumber(calcClass("meal"), 2);
       document.getElementById("otherTotal").value = formatNumber(calcClass("other"), 2);
       document.getElementById("expTotal").value = formatUSCurrency(calcClass("sum"));
-
-
-
 }
 
 
